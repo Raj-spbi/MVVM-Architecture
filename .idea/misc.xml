@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/MyTest/GrocerySystem/app/src/main/res/drawable/background_light.xml" value="0.1835" />
+        <entry key="..\:/MyTest/GrocerySystem/app/src/main/res/drawable/bg_button.xml" value="0.1945" />
+        <entry key="..\:/MyTest/GrocerySystem/app/src/main/res/drawable/bg_button_with_stroke.xml" value="0.1945" />
+        <entry key="..\:/MyTest/GrocerySystem/app/src/main/res/drawable/circle_bg.xml" value="0.1" />
+        <entry key="..\:/MyTest/GrocerySystem/app/src/main/res/drawable/ic_baseline_favorite_border_24.xml" value="0.1835" />
+        <entry key="..\:/MyTest/GrocerySystem/app/src/main/res/drawable/ic_outline_add_photo_alternate_24.xml" value="0.1" />
+        <entry key="..\:/MyTest/GrocerySystem/app/src/main/res/drawable/ic_outline_person_24.xml" value="0.1945" />
+        <entry key="..\:/MyTest/GrocerySystem/app/src/main/res/drawable/ic_outline_policy_24.xml" value="0.1945" />
+        <entry key="..\:/MyTest/GrocerySystem/app/src/main/res/drawable/text_bg1.xml" value="0.2" />
+        <entry key="..\:/MyTest/GrocerySystem/app/src/main/res/font/abhaya_libre_medium.xml" value="0.22239583333333332" />
+        <entry key="..\:/MyTest/GrocerySystem/app/src/main/res/font/muli.xml" value="0.22239583333333332" />
+        <entry key="..\:/MyTest/GrocerySystem/app/src/main/res/layout/activity_add_products_acctivity.xml" value="0.22" />
+        <entry key="..\:/MyTest/GrocerySystem/app/src/main/res/layout/activity_admin_dashboard.xml" value="0.17074275362318841" />
+        <entry key="..\:/MyTest/GrocerySystem/app/src/main/res/layout/activity_login.xml" value="0.17074275362318841" />
+        <entry key="..\:/MyTest/GrocerySystem/app/src/main/res/layout/activity_registration.xml" value="0.21" />
+        <entry key="..\:/MyTest/GrocerySystem/app/src/main/res/layout/activity_splash_screen.xml" value="0.17074275362318841" />
+        <entry key="..\:/MyTest/GrocerySystem/app/src/main/res/layout/item_product.xml" value="0.67" />
+        <entry key="..\:/MyTest/GrocerySystem/app/src/main/res/layout/show_items.xml" value="0.2232360097323601" />
+        <entry key="..\:/MyTest/GrocerySystem/app/src/main/res/xml/provider_paths.xml" value="0.1" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="Android Studio default JDK" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>
