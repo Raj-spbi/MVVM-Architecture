@@ -36,6 +36,15 @@
             android:padding="4dp"
             tools:ignore="UselessParent">
 
+            <TextView
+                android:id="@+id/catName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="2dp"
+                android:text=""
+                android:textColor="@color/black"
+                android:textSize="10sp" />
+
             <ImageView
                 android:id="@+id/image"
                 android:layout_width="85dp"

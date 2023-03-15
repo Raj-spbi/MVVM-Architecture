@@ -7,13 +7,13 @@ import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.request.CachePolicy
 import coil.transform.RoundedCornersTransformation
-
-import com.example.grocerysystem.model.Items
 import com.example.grocerysystem.R
 import com.example.grocerysystem.databinding.ItemProductBinding
+import com.example.grocerysystem.model.Items
 
 class AdapterRecycler(
     val data: ArrayList<Items>,
+    val onItemClick: (Items) -> Unit,
 ) : RecyclerView.Adapter<AdapterRecycler.ExViewHolder>() {
 
     class ExViewHolder(var binding: ItemProductBinding) :
@@ -31,7 +31,10 @@ class AdapterRecycler(
     override fun onBindViewHolder(holder: ExViewHolder, position: Int) {
         holder.binding.title.text = data[position].title
         holder.binding.desc.text = data[position].description
+        holder.binding.catName.text = data[position].category
         holder.binding.newprice.text = "Rs. ${data[position].price}"
+
+
 
         holder.binding.image.load(data[position].image) {
             crossfade(true)
@@ -41,6 +44,10 @@ class AdapterRecycler(
             memoryCachePolicy(CachePolicy.ENABLED)
             transformations(RoundedCornersTransformation(16f))
 //            transformations(CircleCropTransformation())
+        }
+
+        holder.binding.image.setOnClickListener {
+            onItemClick(data[position])
         }
     }
 

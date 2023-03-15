@@ -7,4 +7,4 @@ data class Items(
     var price: String? = null,
     var category: String? = null,
     var image: String? = null
-)
+):java.io.Serializable

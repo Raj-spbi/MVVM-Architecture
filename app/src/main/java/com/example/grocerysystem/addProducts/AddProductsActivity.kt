@@ -7,16 +7,20 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.View
+import android.view.ViewGroup
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
-import com.example.grocerysystem.Helper
+import androidx.lifecycle.Observer
 import com.example.grocerysystem.NetworkResult
 import com.example.grocerysystem.R
+import com.example.grocerysystem.categoryMgmt.AddCategoryViewModel
 import com.example.grocerysystem.databinding.ActivityAddProductsAcctivityBinding
-import com.example.grocerysystem.util.FirebaseUtil
+import com.example.grocerysystem.util.Helper
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 import dagger.hilt.android.AndroidEntryPoint
 import java.io.IOException
 
@@ -36,33 +40,35 @@ class AddProductsActivity : AppCompatActivity() {
     private var price: String? = null
     private var category: String? = null
     private val addProductsViewModel: AddProductsViewModel by viewModels<AddProductsViewModel>()
-
+    private val showCategoryViewModel: AddCategoryViewModel by viewModels<AddCategoryViewModel>()
+    private var selectedChip = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = DataBindingUtil.setContentView(this, R.layout.activity_add_products_acctivity)
         _context = this
 
-      /*  addProductsViewModel =
-            ViewModelProvider(this, AddProductsVMFactory(AddProductRepository())).get(
-                AddProductsViewModel::class.java
-            )
-*/
+        /*  addProductsViewModel =
+              ViewModelProvider(this, AddProductsVMFactory(AddProductRepository())).get(
+                  AddProductsViewModel::class.java
+              )
+  */
+
+
         binding.addProduct.setOnClickListener {
             title = binding.title.text.toString()
             description = binding.description.text.toString()
             price = binding.priceTxt.text.toString()
-            category = binding.categoryTxt.text.toString()
+//            category = binding.categoryTxt.text.toString()
 
             val validationType: Pair<Boolean, String> =
                 addProductsViewModel.validateDataEnteredByUser(
                     title!!,
-                    description!!, price!!, category!!, filePath
+                    description!!, price!!, selectedChip, filePath
                 )
             if (validationType.first) {
                 addProductsViewModel.updateImageAndRecords(
-                    title!!,
-                    description!!, price!!, category!!, filePath
+                    title!!, description!!, price!!, selectedChip, filePath
                 )
             } else {
                 Toast.makeText(context, validationType.second, Toast.LENGTH_SHORT).show()
@@ -71,7 +77,8 @@ class AddProductsActivity : AppCompatActivity() {
         }
 
         bindingObservers()
-
+        //load Category
+        getCategories()
     }
 
 
@@ -141,8 +148,7 @@ class AddProductsActivity : AppCompatActivity() {
                 // Setting image on image view using Bitmap
                 val bitmap = MediaStore.Images.Media
                     .getBitmap(
-                        contentResolver,
-                        filePath
+                        contentResolver, filePath
                     )
                 binding.imageToUpload.setImageBitmap(bitmap)
             } catch (e: IOException) {
@@ -151,5 +157,74 @@ class AddProductsActivity : AppCompatActivity() {
             }
         }
     }
+
+    private fun createChip(label: String, id: String): Chip {
+        val chip = Chip(
+            this,
+            null,
+            com.google.android.material.R.style.Widget_MaterialComponents_Chip_Entry
+        )
+        chip.layoutParams = LinearLayout.LayoutParams(
+            ViewGroup.LayoutParams.WRAP_CONTENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
+
+        chip.text = label
+//        chip.isCloseIconVisible = true
+        chip.isChipIconVisible = true
+        chip.isCheckable = true
+        chip.isClickable = true
+//        chip.id=id.toInt()
+//        chip.setOnCloseIconClickListener {
+//            Toast.makeText(this, "Chip deleted successfully", Toast.LENGTH_SHORT).show()
+//        }
+        return chip
+    }
+
+    private fun getCategories() {
+        showCategoryViewModel.readCategories()
+        showCategoryViewModel.showCategoryLiveData.observe(this, Observer {
+            Helper.hideLoadingDialog()
+            when (it) {
+                is NetworkResult.Success -> {
+                    val chiGu: ChipGroup = binding.chipGroupFilter
+
+                    if (it.data!!.isNotEmpty()) {
+//                        binding.categoryTxt.isVisible = true
+
+                        chiGu.isSingleSelection = true
+                        chiGu.isSingleLine = false
+
+                        for (i in it.data) {
+                            chiGu.addView(i.title?.let { it1 ->
+                                i.id?.let { it2 ->
+                                    createChip(
+                                        it1,
+                                        it2
+                                    )
+                                }
+                            })
+
+                        }
+
+                        chiGu.setOnCheckedChangeListener { group, checkedId ->
+                            val chip: Chip? = group.findViewById(checkedId)
+                            selectedChip = chip?.text.toString()
+                        }
+                    } else {
+                        chiGu.visibility = View.GONE
+                    }
+
+                }
+                is NetworkResult.Error -> {
+                    Toast.makeText(context, it.message.toString(), Toast.LENGTH_SHORT).show()
+                }
+                is NetworkResult.Loading -> {
+                    Helper.showLoadingDialog(context)
+                }
+            }
+        })
+    }
+
 
 }

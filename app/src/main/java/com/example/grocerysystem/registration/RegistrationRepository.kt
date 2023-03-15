@@ -7,9 +7,8 @@ import com.example.grocerysystem.model.RegisterRequest
 import com.example.grocerysystem.util.FirebaseUtil
 import javax.inject.Inject
 
-class RegistrationRepository {
-    @Inject
-    lateinit var firebaseUtil: FirebaseUtil
+class RegistrationRepository @Inject constructor(private val firebaseUtil: FirebaseUtil)  {
+
     private val _userResponseLiveData = MutableLiveData<NetworkResult<String>>()
     val userResponseLiveData: LiveData<NetworkResult<String>>
         get() = _userResponseLiveData

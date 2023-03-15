@@ -12,9 +12,8 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.getValue
 import javax.inject.Inject
 
-class LoginRepository {
+class LoginRepository @Inject constructor(private val firebaseUtil: FirebaseUtil) {
 
-    @Inject lateinit var firebaseUtil: FirebaseUtil
     private val _loginResponseLiveData = MutableLiveData<NetworkResult<RegisterRequest>>()
     val loginResponseLiveData: LiveData<NetworkResult<RegisterRequest>>
         get() = _loginResponseLiveData

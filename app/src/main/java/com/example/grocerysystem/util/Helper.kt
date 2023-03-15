@@ -1,4 +1,4 @@
-package com.example.grocerysystem
+package com.example.grocerysystem.util
 
 import android.app.ProgressDialog
 import android.content.Context

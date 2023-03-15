@@ -113,7 +113,7 @@
                         android:text="Category"
                         android:textSize="10dp" />
 
-                    <EditText
+                  <!--  <Spinner
                         android:id="@+id/categoryTxt"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -124,7 +124,19 @@
                         android:paddingTop="10dp"
                         android:paddingRight="10dp"
                         android:paddingBottom="10dp"
-                        android:textColor="@color/black" />
+                        android:visibility="gone"
+                        android:textColor="@color/black" />-->
+
+                    <com.google.android.material.chip.ChipGroup
+                        android:id="@+id/chip_group_filter"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginEnd="8dp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/text_filter"
+                        app:singleSelection="true" />
 
                     <ImageView
                         android:id="@+id/imageToUpload"
@@ -136,7 +148,7 @@
 
                     <Button
                         android:layout_width="wrap_content"
-                        android:layout_height="26dp"
+                        android:layout_height="36dp"
                         android:layout_gravity="center"
                         android:layout_margin="10dp"
                         android:background="@drawable/circle_bg"

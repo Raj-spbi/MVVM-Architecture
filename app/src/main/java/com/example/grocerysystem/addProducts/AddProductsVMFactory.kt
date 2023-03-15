@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import java.security.InvalidParameterException
 
-class AddProductsVMFactory(val userRepository: AddProductRepository) :
+class AddProductsVMFactory(private val userRepository: AddProductRepository) :
     ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(AddProductsViewModel::class.java)) {

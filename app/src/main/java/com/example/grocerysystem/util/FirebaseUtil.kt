@@ -16,9 +16,6 @@ class FirebaseUtil @Inject constructor() {
     val database: DatabaseReference by lazy {
         Firebase.database.reference
     }
-    val firebaseStore: FirebaseStorage by lazy {
-        FirebaseStorage.getInstance()
-    }
 
     val storageReference: StorageReference by lazy {
         FirebaseStorage.getInstance().reference

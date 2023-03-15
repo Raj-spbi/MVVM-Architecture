@@ -4,12 +4,15 @@ import android.text.TextUtils
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.grocerysystem.Helper
 import com.example.grocerysystem.NetworkResult
 import com.example.grocerysystem.model.RegisterRequest
+import com.example.grocerysystem.util.Helper
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class RegistrationViewModel(private val registrationRepository: RegistrationRepository) :
+@HiltViewModel
+class RegistrationViewModel @Inject constructor(private val registrationRepository: RegistrationRepository) :
     ViewModel() {
 
     val userResponseLiveData: LiveData<NetworkResult<String>>

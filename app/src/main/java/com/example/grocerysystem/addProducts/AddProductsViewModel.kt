@@ -41,14 +41,13 @@ class AddProductsViewModel @Inject constructor(private val addProductRepository:
             if (description.isNotBlank()) {
                 if (price.isNotBlank()) {
                     if (category.isNotBlank()) {
-                        if (filePath.toString().isNotBlank()) {
+                        if (filePath!=null && filePath.toString().isNotBlank()) {
                             //Here I'm not pasing anything so that Pair can be true
                         } else {
                             result = Pair(false, "Select Image")
-
                         }
                     } else {
-                        result = Pair(false, "Enter Category")
+                        result = Pair(false, "Select Category")
 
                     }
                 } else {

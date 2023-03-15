@@ -4,20 +4,25 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import com.example.grocerysystem.Helper
 import com.example.grocerysystem.NetworkResult
 import com.example.grocerysystem.R
-import com.example.grocerysystem.RegistrationActivity
 import com.example.grocerysystem.databinding.ActivityLoginBinding
 import com.example.grocerysystem.model.LoginRequest
 import com.example.grocerysystem.model.RegisterRequest
+import com.example.grocerysystem.registration.RegistrationActivity
 import com.example.grocerysystem.showProducts.AdminDashboardActivity
-import com.example.grocerysystem.util.FirebaseUtil
+import com.example.grocerysystem.util.Const
+import com.example.grocerysystem.util.Helper
+import com.example.grocerysystem.util.UserManager
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class LoginActivity : AppCompatActivity() {
     private var _binding: ActivityLoginBinding? = null
     private val binding get() = _binding!!
@@ -27,21 +32,27 @@ class LoginActivity : AppCompatActivity() {
     private val context get() = _context!!
 
     private lateinit var currentUserDetails: RegisterRequest
-    lateinit var loginViewModel: LoginViewModel
+    private val loginViewModel: LoginViewModel by viewModels<LoginViewModel>()
+//    private val addProductsViewModel: AddProductsViewModel by viewModels<AddProductsViewModel>()
+
+    lateinit var userManager: UserManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         _binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
 
         _context = this
-        loginViewModel =
-            ViewModelProvider(this, LoginVMFactory(LoginRepository())).get(
-                LoginViewModel::class.java
-            )
+        userManager = UserManager(this)
+        /*  loginViewModel =
+              ViewModelProvider(this, LoginVMFactory(LoginRepository())).get(
+                  LoginViewModel::class.java
+              )*/
 
 
         binding.seller.setOnClickListener {
             val intent = Intent(this, AdminDashboardActivity::class.java)
+            intent.putExtra(Const.isSeller, Const.SELLER)
             startActivity(intent)
         }
 
@@ -89,7 +100,12 @@ class LoginActivity : AppCompatActivity() {
                 is NetworkResult.Success -> {
                     currentUserDetails = it.data!!
 
-
+                    GlobalScope.launch {
+                        userManager.storeUser(
+                            currentUserDetails.firebaseUserId!!,
+                            currentUserDetails.username!!
+                        )
+                    }
 //                    CoroutineScope(Dispatchers.IO).launch {
 //                        Log.e("cbvhgdjk", "bindObservals: " + currentUserDetails.username)
 //                        userDetails.storeUser(
@@ -109,7 +125,12 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun gotoMainPage(context: Context, currentUserDetails: RegisterRequest) {
-        Helper.showToast(context, "Hello ${currentUserDetails.username}")
+        val intent = Intent(this, AdminDashboardActivity::class.java)
+        intent.putExtra(Const.isSeller, Const.USER)
+        startActivity(intent)
+        finish()
+//        Helper.showToast(context, "Hello ${currentUserDetails.username}")
     }
+
 
 }
