@@ -128,7 +128,6 @@ class ShowCategoriesActivity : AppCompatActivity() {
 
     private fun onDeleteClick(categoryItem: CategoryItem) {
         addCategoryViewModel.deleteCat(categoryItem)
-
     }
 
     private fun obserDeletedOrNot() {
